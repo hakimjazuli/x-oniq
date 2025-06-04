@@ -44,6 +44,10 @@ import { neinth } from 'neinth';
  * ```sql
  * select a as b from myTable where id= :user_id
  * ```
+ * >>- the `fieldName` of `input` and `output` have:
+ * >>>- details: `detailName` of `input`/`output`, separated by underscore `_`;
+ * >>>>- this is usefull if you want to use a pattern to handle the `fieldName` conditionally, like, `hashed_password`, or `be_apiKey` (as in backend only);
+ * >>>- full: `fullName` of `input`/`output`;
  */
 export class SQLInfos {
 	/**
@@ -135,11 +139,31 @@ export class SQLInfos {
 		return strings;
 	}
 	/**
+	 * @typedef {Object} inputOutput
+	 * @property {string} full
+	 * - `fullName` of the `input`/`output`;
+	 * @property {string[]} details
+	 * - `detailName` of the `input`/`output`, separated using `underscore` `_`;
+	 */
+	/**
 	 * @private
-	 * @type {string[]}
+	 * @param {string[]} fullStrings
+	 * @returns {inputOutput[]}
+	 */
+	static generateInpuOutput = (fullStrings) => {
+		const inputOutputs = [];
+		for (let i = 0; i < fullStrings.length; i++) {
+			const full = fullStrings[i];
+			inputOutputs.push({ full, details: full.split('_') });
+		}
+		return inputOutputs;
+	};
+	/**
+	 * @private
+	 * @type {inputOutput[]}
 	 */
 	get outputFields() {
-		return SQLInfos.toUnqoute(SQLInfos.getOutputFields(this.content));
+		return SQLInfos.generateInpuOutput(SQLInfos.toUnqoute(SQLInfos.getOutputFields(this.content)));
 	}
 	/**
 	 * Extracts and returns the list of fields that will be returned by any SQL query.
@@ -225,10 +249,12 @@ export class SQLInfos {
 	}
 	/**
 	 * @private
-	 * @type {string[]}
+	 * @type {inputOutput[]}
 	 */
 	get inputFields() {
-		return SQLInfos.getInputFields(this.content, this.configInstance.inputFieldStartsWith);
+		return SQLInfos.generateInpuOutput(
+			SQLInfos.getInputFields(this.content, this.configInstance.inputFieldStartsWith)
+		);
 	}
 	/**
 	 * Extracts input fields from a SQL query that use colon-prefixed parameters.
