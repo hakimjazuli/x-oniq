@@ -3,7 +3,7 @@
 		"neinth": "^0.10.5"
 	},
 	"name": "x-oniq",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "a neinth library to parse raw sql file into readable input-output, and to handle them in neinth script.",
 	"main": "index.mjs",
 	"devDependencies": {},
