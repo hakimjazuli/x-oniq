@@ -4,7 +4,7 @@ import { neinth } from 'neinth';
 
 /**
  * @description
- * placeholder for Configs
+ * - main config file, to be loaded and instantiated on your `config`
  */
 /**
  * @template ReturnedFromHandler

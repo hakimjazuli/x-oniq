@@ -4,7 +4,46 @@ import { neinth } from 'neinth';
 
 /**
  * @description
- * placeholder for SQLInfos
+ * - class definition for parser and collections of the sole data truth to be handled via `Configs` `handlers`:
+ * >- `param0.loopHandler`, and;
+ * >- `param0.postLoopHandler`;
+ * - example on how `config/configs.mjs` looks like:
+ * ```js
+ * // @ts-check
+ *
+ *import { neinth } from 'neinth';
+ *
+ * /**
+ *  * this is an neinth-script example
+ *  *[blank]/
+ *	export default new neinth(async ({ importNeinth, writeFile }) => {
+ *		const configs = importNeinth('neinth-src/x-oniq/core/Configs.mjs').value;
+ *		if (!configs) {
+ *			return;
+ *		}
+ *		return new configs({
+ *			sqlPath: 'sqls',
+ *			frontendMjs: 'dev/frontend/js/type.mjs',
+ *			backendBasePath: 'backend/sqlMap',
+ *			inputFieldStartsWith: ':',
+ *			async loopHandler(sqlInfos) {
+ *				// all configs option arguments are passed to sqlInfos.sqlInfos.configInstance;
+ *				// writeFile({ ...options });
+ *				return sqlInfos.fields;
+ *			},
+ *			async postLoopHandler(set_) {
+ *				console.dir({ fields: set_ }, { depth: null });
+ *				// writeFile({ ...options });
+ *			},
+ *		});
+ *	});
+ * ```
+ * - try to create:
+ * >- `sqls`
+ * >>- `myQuery.sql`
+ * ```sql
+ * select a as b from myTable where id= :user_id
+ * ```
  */
 export class SQLInfos {
 	/**
