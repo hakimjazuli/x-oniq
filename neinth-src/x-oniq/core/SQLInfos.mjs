@@ -69,17 +69,29 @@ export class SQLInfos {
 		 * - `Config` values;
 		 */
 		this.configInstance = configInstance;
-		/**
-		 * @type {{output:SQLInfos['outputFields'],input:SQLInfos['inputFields']}}
-		 */
-		this.fields = { output: this.outputFields, input: this.inputFields };
 	}
+	/**
+	 * @typedef {Object} sqlFieldsType
+	 * @property {inputOutput[]} input
+	 * @property {inputOutput[]} output
+	 */
+	/**
+	 * @type {sqlFieldsType}
+	 */
+	get fields() {
+		return { input: this.inputFields, output: this.outputFields };
+	}
+
 	/**
 	 * @typedef {Object} sqlRelativePath
 	 * @property {Object} path
 	 * - details of `relativePath`;
-	 * @property {Array<string>} path.array
-	 * - `relativePath` as `array`;
+	 * @property {Object} path.array
+	 * - `relativePath` as `array`:
+	 * @property {Array<string>} path.array.asc
+	 * - `relativePath` as `array` asc;
+	 * @property {Array<string>} path.array.desc
+	 * - `relativePath` as `array` desc;
 	 * @property {string} path.string
 	 * - `relativePath` as `string`;
 	 * @property {string} ext
@@ -111,7 +123,7 @@ export class SQLInfos {
 		const ext = nameArray[lastIndex];
 		const details = nameArray.slice(0, lastIndex);
 		return (this.relativePathDetails = {
-			path: { string: fullPath, array: pathArray },
+			path: { string: fullPath, array: { asc: pathArray, desc: [...pathArray].reverse() } },
 			ext,
 			name: { full: fullName, noExt: fullName.replace(`.${ext}`, ''), details },
 		});
@@ -142,8 +154,12 @@ export class SQLInfos {
 	 * @typedef {Object} inputOutput
 	 * @property {string} full
 	 * - `fullName` of the `input`/`output`;
-	 * @property {string[]} details
+	 * @property {Object} details
 	 * - `detailName` of the `input`/`output`, separated using `underscore` `_`;
+	 * @property {string[]} details.asc
+	 * - `detailName` with asc order;
+	 * @property {string[]} details.desc
+	 * - `detailName` with desc order;
 	 */
 	/**
 	 * @private
@@ -154,7 +170,9 @@ export class SQLInfos {
 		const inputOutputs = [];
 		for (let i = 0; i < fullStrings.length; i++) {
 			const full = fullStrings[i];
-			inputOutputs.push({ full, details: full.split('_') });
+			const asc = full.split('_');
+			const desc = [...asc].reverse();
+			inputOutputs.push({ full, details: { asc, desc } });
 		}
 		return inputOutputs;
 	};

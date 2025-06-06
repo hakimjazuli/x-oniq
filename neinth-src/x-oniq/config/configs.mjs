@@ -16,10 +16,11 @@ export default new neinth(async ({ importNeinth }) => {
 		backendBasePath: 'backend/sqlMap',
 		inputFieldStartsWith: ':',
 		async loopHandler(sqlInfos) {
-			return sqlInfos.fields;
+			return sqlInfos.sqlRelativePath;
 		},
 		async postLoopHandler(set_) {
-			console.dir({ fields: set_ }, { depth: null });
+			console.dir(set_, { depth: null });
+			// console.dir({ fields: set_ }, { depth: null });
 		},
 	});
 });
