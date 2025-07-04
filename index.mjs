@@ -23,6 +23,8 @@
  * >- example are using `npm` and `npx`, you can technically use anything that compatible for them(eg. `bun` and `bunx`);
  * 
  * >- installation:
+ * 
+ * > ⚠⚠⚠ watch out for the `i` flag, it is a fresh install for all `neinth-src/x-oniq`, including your `config` ⚠⚠⚠
  * ```shell
  * npm i x-oniq
  * npx neinth-package -p x-oniq -i
@@ -32,14 +34,18 @@
  * npm i x-oniq
  * npx neinth-package -p x-oniq
  * ```
- * >- watch out for the `i` flag, it is a fresh install for all `neinth-src/x-oniq`, including your `config`;
  * 
  * ## how it works
  * - the parser is just regex matcher to simple rulling;
  * >- if you find oncovered edge cases that it should be an input or output field yet it is not detected, or over detected, you can report it as a bug;
  * - we don't typesafe your raw SQL, you can use more dedicated typesafe sql writer(eg. [HeidiSQL](http://heidisql.com/), or your favourite software) to write them;
  * - it is works on top of [neinth](https://www.npmjs.com/package/neinth);
- * >- meaning, you get `neinth` access for managing `script` generation on the fly using `writeFile`, fully managed by `neinth` each time the necessary `neinth-src/**/*` changes;
+ * >- meaning, you get `neinth` access for managing `script` generation on the fly using `writeFile`, fully managed by `neinth` each time the necessary `neinth-src/**[blank]/*` changes;
+ * 
+ * ## versions
+ * - `0.4.x`:
+ * >- `neinth` breaking changes;
+ * >>- after update, check the configs file on the `node_module/x-oniq/neinth-src/x-oniq/config/configs.mjs` for new exposed `neinth` handlers;
  * 
  */
 export { Configs } from './neinth-src/x-oniq/core/Configs.mjs';

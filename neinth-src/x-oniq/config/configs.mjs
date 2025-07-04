@@ -1,26 +1,35 @@
 // @ts-check
 
-import { neinth } from 'neinth';
+import { NeinthComponent } from 'neinth';
 
 /**
- * this is an neinth-script example
+ * @typedef {import('../core/Configs.mjs').Configs} Configs
  */
-export default new neinth(async ({ importNeinth }) => {
-	const configs = importNeinth('neinth-src/x-oniq/core/Configs.mjs').value;
-	if (!configs) {
-		return;
-	}
-	return new configs({
-		sqlPath: 'sqls',
-		frontendMjs: 'dev/frontend/js/type.mjs',
-		backendBasePath: 'backend/sqlMap',
-		inputFieldStartsWith: ':',
-		async loopHandler(sqlInfos) {
-			return sqlInfos.sqlRelativePath;
-		},
-		async postLoopHandler(set_) {
-			console.dir(set_, { depth: null });
-			// console.dir({ fields: set_ }, { depth: null });
+/**
+ * @type {NeinthComponent<
+ * undefined|Configs,
+ * undefined
+ * >}
+ */
+const neinthInstance = new NeinthComponent(async function () {
+	const Configs_ = this.listenToNeinth('neinth-src/x-oniq/core/Configs.mjs');
+	return this.updateValue$({
+		neinthInstance,
+		mode: 'mostRecent',
+		derived: async () => {
+			const Configs = Configs_.value;
+			if (!Configs) {
+				return;
+			}
+			return new Configs({
+				sqlPath: 'sqls',
+				frontendMjs: 'dev/frontend/js/type.mjs',
+				backendBasePath: 'backend/sqlMap',
+				inputFieldStartsWith: ':',
+				async loopHandler() {},
+				async postLoopHandler() {},
+			});
 		},
 	});
 });
+export default neinthInstance;

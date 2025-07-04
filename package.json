@@ -1,28 +1,28 @@
 {
-	"dependencies": {
-		"neinth": "^0.10.5"
-	},
 	"name": "x-oniq",
 	"version": "0.3.0",
-	"description": "a neinth library to parse raw sql file into readable input-output, and to handle them in neinth script.",
-	"main": "index.mjs",
-	"devDependencies": {},
-	"scripts": {
-		"dev": "concurrently 'bunx neinth' 'bun --watch ./dev/neinth/auto-doc.mjs'"
-	},
+	"author": "hakim_jazuli",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/hakimjazuli/x-oniq.git"
 	},
+	"main": "index.mjs",
+	"devDependencies": {},
+	"bugs": {
+		"url": "https://github.com/hakimjazuli/x-oniq/issues"
+	},
+	"description": "a neinth library to parse raw sql file into readable input-output, and to handle them in neinth script.",
+	"homepage": "https://github.com/hakimjazuli/x-oniq#readme",
 	"keywords": [
 		"sql",
 		"parser",
 		"neinth-library"
 	],
-	"author": "hakim_jazuli",
 	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/hakimjazuli/x-oniq/issues"
+	"scripts": {
+		"dev": "concurrently 'bunx neinth' 'bun --watch ./dev/neinth/auto-doc.mjs'"
 	},
-	"homepage": "https://github.com/hakimjazuli/x-oniq#readme"
+	"dependencies": {
+		"neinth": "^0.11.0"
+	}
 }

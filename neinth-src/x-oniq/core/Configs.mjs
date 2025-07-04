@@ -1,6 +1,6 @@
 // @ts-check
 
-import { neinth } from 'neinth';
+import { NeinthComponent } from 'neinth';
 
 /**
  * @description
@@ -65,7 +65,10 @@ export class Configs {
 	 */
 	postLoopHandler;
 }
-
-export default new neinth(async () => {
+/**
+ * @type {NeinthComponent<typeof Configs>}
+ */
+const neinthInstance = new NeinthComponent(async function () {
 	return Configs;
 });
+export default neinthInstance;

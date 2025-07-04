@@ -1,6 +1,6 @@
 // @ts-check
 
-import { neinth } from 'neinth';
+import { NeinthComponent } from 'neinth';
 
 /**
  * @description
@@ -9,34 +9,38 @@ import { neinth } from 'neinth';
  * >- `param0.postLoopHandler`;
  * - example on how `config/configs.mjs` looks like:
  * ```js
- * // @ts-check
+ *  // @ts-check
  *
- *import { neinth } from 'neinth';
+ * import { NeinthComponent } from 'Neinth';
  *
  * /**
- *  * this is an neinth-script example
+ *  * @typedef {import('../core/Configs.mjs').Configs} Configs
  *  *[blank]/
- *	export default new neinth(async ({ importNeinth, writeFile }) => {
- *		const configs = importNeinth('neinth-src/x-oniq/core/Configs.mjs').value;
- *		if (!configs) {
- *			return;
- *		}
- *		return new configs({
- *			sqlPath: 'sqls',
- *			frontendMjs: 'dev/frontend/js/type.mjs',
- *			backendBasePath: 'backend/sqlMap',
- *			inputFieldStartsWith: ':',
- *			async loopHandler(sqlInfos) {
- *				// all configs option arguments are passed to sqlInfos.sqlInfos.configInstance;
- *				// writeFile({ ...options });
- *				return sqlInfos.fields;
- *			},
- *			async postLoopHandler(set_) {
- *				console.dir({ fields: set_ }, { depth: null });
- *				// writeFile({ ...options });
- *			},
- *		});
- *	});
+ * /**
+ *  * @type {NeinthComponent<undefined|Configs,undefined>}
+ *  *[blank]/
+ * const neinthInstance = new NeinthComponent(async function () {
+ * 	const Configs_ = this.listenToNeinth('neinth-src/x-oniq/core/Configs.mjs');
+ * 	return this.updateValue$({
+ * 		neinthInstance,
+ * 		mode: 'mostRecent',
+ * 		derived: async () => {
+ * 			const Configs = Configs_.value;
+ * 			if (!Configs) {
+ * 				return;
+ * 			}
+ * 			return new Configs({
+ * 				sqlPath: 'sqls',
+ * 				frontendMjs: 'dev/frontend/js/type.mjs',
+ * 				backendBasePath: 'backend/sqlMap',
+ * 				inputFieldStartsWith: ':',
+ * 				async loopHandler() {},
+ * 				async postLoopHandler() {},
+ * 			});
+ * 		},
+ * 	});
+ * });
+ * export default neinthInstance;
  * ```
  * - try to create:
  * >- `sqls`
@@ -51,7 +55,7 @@ import { neinth } from 'neinth';
  */
 export class SQLInfos {
 	/**
-	 * @typedef {import('neinth').infos} Info
+	 * @typedef {import('neinth').Infos} Info
 	 */
 	/**
 	 * @param {Object} a0
@@ -300,6 +304,6 @@ export class SQLInfos {
 	}
 }
 
-export default new neinth(async () => {
+export default new NeinthComponent(async () => {
 	return SQLInfos;
 });
