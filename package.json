@@ -22,6 +22,6 @@
 		"dev": "concurrently 'bunx neinth' 'bun --watch ./dev/neinth/auto-doc.mjs'"
 	},
 	"dependencies": {
-		"neinth": "^0.11.2"
+		"neinth": "^0.11.3"
 	}
 }
